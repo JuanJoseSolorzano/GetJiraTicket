@@ -10,6 +10,8 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import TerminalTrueColorFormatter
 from requests.auth import HTTPBasicAuth
 from rich.console import Console
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 sys.stdout.reconfigure(encoding="utf-8")  # type: ignore
 sys.stderr.reconfigure(encoding="utf-8")  # type: ignore
@@ -109,7 +111,8 @@ def connect_jira(issue_id: str) -> requests.Response:
         url,
         params=PARAMS,
         auth=HTTPBasicAuth(JIRA_EMAIL, JIRA_API_TOKEN),
-        headers={"Accept": "application/json"}
+        headers={"Accept": "application/json"},
+        verify=False
     )
 
 
